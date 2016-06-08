@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="initial-scale=1.0, maximum-scale=3, minimum-scale=1, user-scalable=no">
+        <meta name="apple-mobile-web-app-title" content="仿IOS三轴联动组件">
+        <meta name="apple-mobile-web-app-capble" content="yse">
+        <meta charset="utf-8">
+        <title>仿IOS三轴联动组件</title>
+        <!-- <link rel="stylesheet" type="text/css" href="css/cascade-control.css"> -->
+        <link rel="stylesheet" type="text/css" href="css/cascade-control.min.css">
+    </head>
+    <body>
+        <input id="cascade-box1" type="text">
+        <div class="cascade-control" id="cascade-control1">
+            <div class="cascade-container">
+                <button class="cascade-enter">确定</button>
+                <div class="cascade-panel">
+                    <ul id="province"></ul>
+                </div>
+                <div class="cascade-panel">
+                    <ul id="city"></ul>
+                </div>
+                <div class="cascade-panel">
+                    <ul id="area"></ul>
+                </div>
+            </div>
+        </div>
+        <input id="cascade-box2" type="text">
+        <div class="cascade-control" id="cascade-control2">
+            <div class="cascade-container">
+                <button class="cascade-enter">确定</button>
+                <div class="cascade-panel">
+                    <ul>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                        <li class="cascade-item">广东</li>
+                        <li class="cascade-item">四川</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="script/jquery-2.2.2.min.js"></script>
+        <!-- <script src="script/cascade-control.js"></script> -->
+        <script src="script/cascade-control.min.js"></script>
+        <script>
+            var  province = [{name:'广东',list:[{name:'深圳',list:[{name:'宝安区'},{name:'南山区'}]},{name:'珠海',list:[{name:'香洲区'},{name:'斗门区'}]}]},{name:'四川',list:[{name:'成都',list:[{name:'成都'},{name:'成都区'}]},{name:'未知',list:[{name:'未知'},{name:'未知区'}]}]}];
+            
+            function fillData(array, obj){
+                var subStr = '';
+                for(var i = 0,len = array.length;i < len;i++){
+                    subStr += '<li class="cascade-item">' + array[i].name + '</li>';
+                }
+                obj.html(subStr);
+            }
+            fillData(province,$('#province'));
+            fillData(province[0].list,$('#city'));
+            fillData(province[0].list[0].list,$('#area'));
+            
+            //var cascade = new CascadeControl('.cascade-control','#cascade-box');
+            var cascade = $('#cascade-box1').cascade('#cascade-control1');
+            $('#cascade-box2').cascade('#cascade-control2');
+            
+            var provinceIndex = 0,cityIndex = 0,areaIndex = 0;
+            cascade.on('change', function(c){
+                switch(c.index){
+                    case 0:
+                        fillData(province[c.selectIndex].list,$('#city'));
+                        fillData(province[c.selectIndex].list[0].list,$('#area'));
+                        provinceIndex = c.selectIndex;
+                        cascade.refresh(1);
+                        cascade.refresh(2);
+                        break;
+                    case 1:
+                        fillData(province[provinceIndex].list[c.selectIndex].list,$('#area'));
+                        cityIndex = c.selectIndex;
+                        cascade.refresh(2);
+                        break;
+                }
+            });
+            /*
+            
+                CascadeControl API (v 1.0)
+                
+                CascadeControl{
+                    off(eventName(String), handle(Function))      解除事件侦听，如果不指定handle则清除对应事件的所有处理函数
+                    on(eventName(String), handle(Function))       添加事件侦听( 该侦听为组件特性事件，不对DOM事件有反应 )
+                    getSelectIndex([index(Number)])               获取当前选中的索引，如果index为空则获取所有项的索引
+                    getSelectText([index(Number)])                获取当前选中的文本，如果index为空则获取所有项的文本
+                    refresh([index(Number)])                      刷新组件，如果index存在则重置指定索引的项
+                }
+                
+                Event ( CascadeControl支持以下事件 )
+                
+                事件名                                            说明
+                change                                            当项发生变化时触发，并附带出发对象索引与更新的选中索引
+                enter                                             当确定按钮被点击时触发
+                
+            */
+        </script>
+    </body>
+</html>

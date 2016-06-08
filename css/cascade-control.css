@@ -1,0 +1,87 @@
+/*
+    name:           cascade-control.css
+    author:         cmCaiBird
+    version:        1.0
+    authorize:      all
+*/
+.cascade-control, .cascade-control * {
+	margin: 0;
+	padding: 0;
+	font-family: "microsoft yahei",Arial, Helvetica, sans-serif;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.cascade-control ul, .cascade-control li {
+	list-style: none;
+}
+.cascade-control {
+	width: 100%;
+	height: 100%;
+	color: #A4AAF5;
+	background: rgba(0,0,0,0.3);
+	position: fixed;
+	left: 0;
+	top: 0;
+	display:none;
+}
+.cascade-container {
+	width: 100%;
+	height: 190px;
+	background: #F1F1F1;
+	position: absolute;
+	overflow: hidden;
+	padding-top: 30px;
+	left: 0;
+	bottom: 0;
+}
+.cascade-container-hide {
+	-webkit-animation: cascadeHide 1s forwards;
+	animation: cascadeHide 1s forwards;
+}
+.cascade-container:after {
+	content:'';
+	clear: both;
+	display: block;
+}
+.cascade-panel {
+	width: 100%;
+	height: 100%;
+	line-height: 30px;
+	text-align: center;
+	position: relative;
+	overflow: hidden;
+	float: left;
+}
+.cascade-panel:before, .cascade-panel:after {
+	content:'';
+	width: 100%;
+	height: 65px;
+	position: absolute;
+	left: 0;
+	z-index: 5;
+}
+.cascade-panel:before {
+	background: -webkit-linear-gradient(#F1F1F1,rgba(241, 241, 241,0.5));
+	background: linear-gradient(#F1F1F1,rgba(241, 241, 241,0.5));
+	top: 0;
+}
+.cascade-panel:after {
+	background: -webkit-linear-gradient(rgba(241, 241, 241,0.5),#F1F1F1);
+	background: linear-gradient(rgba(241, 241, 241,0.5),#F1F1F1);
+	bottom: 0;
+}
+.cascade-panel ul {
+	position: relative;
+	top:0;
+}
+.cascade-enter {
+	width: 60px;
+	height: 30px;
+	border: 0;
+	color: #A4AAF5;
+	background: transparent;
+	outline: none;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
