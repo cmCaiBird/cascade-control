@@ -1,7 +1,7 @@
 /*
     name:           cascade-control.js
     author:         cmCaiBird
-    version:        1.0
+    version:        1.3
     authorize:      all
 */
 function CascadeControl(dom,input){
@@ -27,6 +27,7 @@ CascadeControlOption = {
             
             //添加默认顶部填充
             panel.css('padding-top',(that.height() - cascade._lineHeight) / 2),
+            that.off('touchstart touchmove touchend touchcancel'),
             that.on('touchstart',function(e){
                 var nowPos = e.originalEvent.touches[0];
                 panel._startPos = {x:nowPos.pageX, y:nowPos.pageY};
@@ -56,8 +57,8 @@ CascadeControlOption = {
                 cascade._exec('change', {index:$(this).index() - 1,selectIndex: nowIndex});//发送事件
             });
         });
-        this._control.on('click',function(e){if(e.target != this) return; $(this).hide();});
-        this._input.on('focus', function(e){
+        this._control.off('click').on('click',function(e){if(e.target != this) return; $(this).hide();});
+        this._input.off('focus').on('focus', function(e){
             e.preventDefault();
             $(this).blur();
             cascade._control.show();
@@ -65,7 +66,7 @@ CascadeControlOption = {
             cascade._container.animate({bottom: 0},300);
             cascade.refresh();
         });
-        this._enter.on('click',function(e){
+        this._enter.off('click').on('click',function(e){
             e.stopPropagation();
             
             var subStr = '';
